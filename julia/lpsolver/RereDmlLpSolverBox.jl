@@ -6,7 +6,7 @@ using LinearAlgebra
 using Optim
 export solveDmlLp
 
-  #
+  # Just for test purpose
   function solveDmlLp(c::Vector,A::Matrix,b::Vector;ifReg::Bool=false)
     v=ones(length(b))  #拉格朗日项系数
     tho=20 #增广拉格朗日项系数（二次）
