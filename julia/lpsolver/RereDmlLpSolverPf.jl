@@ -7,7 +7,7 @@ using Optim, LineSearches
 export solveDmlLp
 
 
-  # solve the L1 and L2 reglized LP problem for DML
+  # Solve the L2 regularization LP problem for Diag-DML based on Penalty Function
   function solveDmlLp(c,A,b, regType::String="l2", regWeight::Number=0,mainVarNum::Number=0)
     c = Float32.(c)
     A = Float32.(A)
