@@ -6,7 +6,7 @@ using LinearAlgebra
 using Optim
 export solveDmlLp
 
-  #
+  # Just for test purpose
   function solveDmlLp(c,A,b, regType::String="l2", regWeight::Number=0,mainVarNum::Number=0)
     c = Float32.(c)
     A = Float32.(A)
