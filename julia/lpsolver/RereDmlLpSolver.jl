@@ -6,6 +6,7 @@ using JuMP
 using GLPK
 export solveDmlLp
 
+  # Just for testing purpose, Diag-DML and its $\ell _1$ regularization solve linear programming problems using a Scala library called "SCPSolver.jar".
   #solve linear programming
   function solveDmlLp(c::Array{Float32},A::Array{Float32,2},b::Array{Float32},ifReg::Bool=true)
     model = JuMP.Model(with_optimizer(GLPK.Optimizer))
