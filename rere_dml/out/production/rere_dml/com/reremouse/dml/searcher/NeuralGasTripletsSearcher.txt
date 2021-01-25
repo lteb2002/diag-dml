@@ -1,0 +1,63 @@
+package com.reremouse.dml.searcher
+
+import com.reremouse.dml.model.{RereData, Triplelet}
+
+/**
+  * Created by RereMouse on 2018-01-18.
+  */
+class NeuralGasTripletsSearcher extends ScalaTripletsSearcher {
+
+  //最大的神经元数
+  var maxNeuralNum: Int = 800
+
+  /**
+    * 按照LMNN方法构建triplet
+    *
+    * @param dataSet 数据集合
+    * @param k       最大加入数目
+    * @param strict  只有在ij<ik时才加入
+    */
+  override def buildTriplets(dataSet: Seq[RereData], k: Int, strict: Boolean): Seq[Triplelet] = {
+    //使用NeuralGas算法选取各类的代表性数据点
+    val transformedData = this.transformWithNeuralGas(dataSet)
+    //以此种方法选取triplets时，不限制k的大小，强制使用maxNeuralNum
+    super.buildTriplets(transformedData, this.maxNeuralNum, strict)
+  }
+
+  /**
+    * 数据点过多时，使用NeuralGas算法选取代表性数据点
+    *
+    * @param dataSet
+    * @return
+    */
+  private def transformWithNeuralGas(dataSet: Seq[RereData]): Seq[RereData] = {
+    var newData = Seq[RereData]()
+    val total = dataSet.size
+    //防止过小的数据集，使代表性数据点多于实际数据点
+    if (total < this.maxNeuralNum) this.maxNeuralNum = total
+    val classMap = dataSet.map(x => {
+      (x, x.getLabel)
+    }).groupBy(_._2) //按label分组并形成Map: {label1 -> (RereData,label1),label2 -> (RereData,label2),...}
+    val keys = classMap.keySet.toList
+    for (key <- keys) {
+      val data = classMap(key)
+      val size = data.size
+      //和数据点数同比例计算本类别的代表性数据点数
+      var neuNum = ((size / total.toDouble) * this.maxNeuralNum).toInt
+      //将二元组RereData和label转换为数组
+      val array = data.map(x => {
+        x._1.getData.toArray //二元组中仅返回第一项中的数据
+      }).toArray
+      //训练NeuralGas网络
+      val gas = new smile.vq.NeuralGas(array, neuNum)
+      //将代表性数据点作为新的RereData加入
+      newData ++= gas.neurons().map(x => {
+        new RereData(x, key)
+      })
+    }
+    logger.info("New data size after transforming with NeuralGas:{}", newData.size)
+    newData
+  }
+
+
+}

@@ -1,0 +1,18 @@
+<component name="libraryTable">
+  <library name="lib2">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/lib2/LPSOLVESolverPack.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib2/weka.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib2/SCPSolver.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib2/GLPKSolverPack.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib2/commons-math3-3.6.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib2/commons-math3-3.6.1-tools.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib2/commons-math3-3.6.1-tests.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <NATIVE>
+      <root url="jar://$PROJECT_DIR$/lib2/breeze-natives_2.11-1.0.jar!/" />
+    </NATIVE>
+    <SOURCES />
+  </library>
+</component>

@@ -1,0 +1,23 @@
+<component name="libraryTable">
+  <library name="netlib">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/lib/arpack_combined_all-0.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/core-1.1.2.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/jniloader-1.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/native_ref-java-1.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/native_system-java-1.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/netlib-native_ref-linux-armhf-1.1-natives.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/netlib-native_ref-linux-i686-1.1-natives.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/netlib-native_ref-linux-x86_64-1.1-natives.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/netlib-native_ref-win-i686-1.1-natives.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/netlib-native_ref-win-x86_64-1.1-natives.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/netlib-native_system-linux-armhf-1.1-natives.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/netlib-native_system-linux-i686-1.1-natives.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/netlib-native_system-linux-x86_64-1.1-natives.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/netlib-native_system-win-i686-1.1-natives.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/netlib-native_system-win-x86_64-1.1-natives.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
