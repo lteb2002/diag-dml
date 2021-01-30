@@ -2,6 +2,8 @@
 
 #set the path where the modules are located
 push!(LOAD_PATH, "./")
+push!(LOAD_PATH, "./lpsolver/")
+push!(LOAD_PATH, "./ju4ja/")
 
 #A examle function ready to be called from java using Ju4ja
 function greetings(name::String)
@@ -15,7 +17,8 @@ end
 
 #using Ju4ja and the example solver for linear programming
 using Ju4ja
-using RereDmlLpSolver
+using RereDmlLpSolverPf
+using RereDmlLpSolverAdmm
 
 #start the Ju4ja server as a new coroutine
 @async begin

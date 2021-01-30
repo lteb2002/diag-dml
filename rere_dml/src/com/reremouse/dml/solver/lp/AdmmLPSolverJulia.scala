@@ -32,13 +32,13 @@ class AdmmLPSolverJulia extends RereLPSolver {
       val ree = LPCoordinator.transformBiggerEqualsThanAsEquals(const, obj)
       var A = ree._1
       var c = ree._2
-      println("Bf-LP solver Julia: Variable number:" + A.cols + ", Constrain number:" + A.rows)
+      println("Admm-LP solver Julia: Variable number:" + A.cols + ", Constrain number:" + A.rows)
       val start = System.currentTimeMillis()
       val jc: Ju4jaClient = new Ju4jaClient(ju4jaIp, ju4jaPort)
       val aa = Array.ofDim[Double](A.rows, A.cols)
-      val mainVarNum = A.cols - A.rows * 2 //主变量数
-      val slackVarNum = A.rows //松弛变量数
-      val surplusVarNum = A.rows //剩余变量数
+      val mainVarNum:Integer = A.cols - A.rows * 2 //主变量数
+      val slackVarNum:Integer = A.rows //松弛变量数
+      val surplusVarNum:Integer = A.rows //剩余变量数
       for (i <- 0 until A.rows) {
         aa(i) = A(i, ::).t.toArray
       }
@@ -46,16 +46,20 @@ class AdmmLPSolverJulia extends RereLPSolver {
       A = breeze.numerics.rint(A * 10000.0) / 10000.0
       c = breeze.numerics.rint(c * 10000.0) / 10000.0
       val bb = breeze.numerics.rint(b * 10000.0) / 10000.0
-      //println(c)
-      var args = Array[AnyRef](c.toArray, aa, bb.toArray, mainVarNum, slackVarNum, surplusVarNum, regType, new java.lang.Double(regWeight))
+//      println(regWeight)
+      val args = Array[AnyRef](c.toArray, aa, bb.toArray, mainVarNum, slackVarNum, surplusVarNum, regType, new java.lang.Double(regWeight))
       val res = jc.invokeFunction("solveDmlLpWithAdmm", "RereDmlLpSolverAdmm", args)
-      var ds: Array[java.lang.Double] = Ju4jaParser.parseStringAs1DArray(res.getResultStr.toString)
+      val ds: Array[java.lang.Double] = Ju4jaParser.parseStringAs1DArray(res.getResultStr.toString)
       //import scala.collection.JavaConverters._
-      var dss = new Array[Double](ds.length)
+      val dss = new Array[Double](ds.length)
       for (i <- 0 until dss.length) {
         dss(i) = ds(i)
       }
-      val value = new DenseVector[Double](dss)
+      var value = new DenseVector[Double](dss)
+      val v2=DenseVector.zeros[Double](slackVarNum)
+      val v3=DenseVector.zeros[Double](surplusVarNum)
+      value=DenseVector.vertcat(value,v2,v3)
+      println("value merged:"+value)
       val end = System.currentTimeMillis()
       println("Time cost:" + (end - start) / 1000.0 + "s")
 

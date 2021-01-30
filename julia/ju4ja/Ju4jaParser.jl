@@ -37,7 +37,13 @@ end
 #测试是否是一个数组的数组
 function ifArrayOfArray(arrs::Array)
    if arrs isa Array
-      return all(e isa Array for e in arrs)
+      for e in arrs
+         if ! (e isa Array)
+            return false
+         end
+      end
+      return true
+      # return all(e isa Array for e in arrs)
    else
       return false
    end
@@ -46,7 +52,14 @@ end
 #测试是否是一个元素类型为数值的一维或二维数组
 function ifNumericArray(arrs)
    if arrs isa Array
-      return all(e isa Number for e in vcat(arrs...))
+      ass = vcat(arrs...)
+      for e in ass
+         if !(e  isa Number)
+            return false
+         end
+      end
+      return true
+      # return all(e isa Number for e in vcat(arrs...))
    else
       return false
    end

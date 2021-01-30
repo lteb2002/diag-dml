@@ -5,13 +5,13 @@ using Optim, LineSearches
 export solveDmlLpWithAdmm
 
 
-    function separateVariables(c, A, b, mainVarNum::Int8,slackNum::Int8,surplusNum::Int8)
+    function separateVariables(c, A, b, mainVarNum::Int16,slackNum::Int16,surplusNum::Int16)
         varNum = length(c)
-        p1MainVarNum = Int8(floor(mainVarNum / 2)) # the main variable number of part1
+        p1MainVarNum = Int16(floor(mainVarNum / 2)) # the main variable number of part1
         p2MainVarNum = mainVarNum - p1MainVarNum# the main variable number of part2
-        p1SlackNum = trunc(Int8,slackNum / 2)# the slack variable number of part1
+        p1SlackNum = trunc(Int16,slackNum / 2)# the slack variable number of part1
         p2SlackNum = slackNum - p1SlackNum# the slack variable number of part2
-        p1SurplusNum = Int8(ceil(surplusNum / 2))# the surplus variable number of part1
+        p1SurplusNum = Int16(ceil(surplusNum / 2))# the surplus variable number of part1
         p2SurplusNum = surplusNum - p1SurplusNum# the surplus variable number of part2
         # println(p1MainVarNum)
         println(p1SurplusNum)
@@ -149,8 +149,10 @@ export solveDmlLpWithAdmm
         f(x)=objective(x,x2,lambda,p1c,p1A,p2c,p2A,b,alpha,beta,gamma)
         lastX = x1
         beta0=beta
-        for i in 1:1
-            # beta = beta0^i
+        for i in 1:10
+            if(beta<1.0e9)
+                beta = beta0^i
+            end
             sol=optimize(f, g!,x1, LBFGS())
             x1 = Optim.minimizer(sol)
             error = sum((x1-lastX).^2)
@@ -158,7 +160,7 @@ export solveDmlLpWithAdmm
             # println("x1 error",error)
             # println("x1:",x1)
             if(error<1.0e-6)
-                # println("x1 is solved in ",i," steps")
+                println("x1 is solved in ",i," steps")
                 break
             end
             lastX = x1
@@ -174,8 +176,10 @@ export solveDmlLpWithAdmm
         f(x)=objective(x1,x,lambda,p1c,p1A,p2c,p2A,b,alpha,beta,gamma)
         lastX = x2
         beta0=beta
-        for i in 1:1
-            # beta = beta0^i
+        for i in 1:10
+            if(beta<1.0e9)
+                beta = beta0^i
+            end
             sol=optimize(f, g!,x2, LBFGS())
             x2 = Optim.minimizer(sol)
             error = sum((x2-lastX).^2)
@@ -183,7 +187,7 @@ export solveDmlLpWithAdmm
             # println("x2 error",error)
             # println("x2:",x2)
             if(error<1.0e-6)
-                # println("x2 is solved in ",i," steps")
+                println("x2 is solved in ",i," steps")
                 break
             end
             lastX = x2
@@ -201,24 +205,24 @@ export solveDmlLpWithAdmm
         c = Float32.(c)
         A = Float32.(A)
         b = Float32.(b)
-        mainVarNum = Int8(mainVarNum);slackNum = Int8(slackNum);surplusNum = Int8(surplusNum)
+        mainVarNum = Int16(mainVarNum);slackNum = Int16(slackNum);surplusNum = Int16(surplusNum)
         p1c,p1A,p2c,p2A,b = separateVariables(c, A, b, mainVarNum,slackNum,surplusNum)
         x1 = ones(length(p1c))*1.0
         x2 = ones(length(p2c))*1.0
         lambda = ones(length(b))*1.0
         alpha = regWeight
-        beta0 = 5
+        beta0 = 100.0
         gamma = 10
 
-        maxStep=100
+        maxStep=20
         error=1.0
         currentStep = 1
         beta = beta0
         while error>1.0E-4 && currentStep < maxStep
-            if(beta<1.0e16)
-                beta = beta0^currentStep
-            end
-            # println("beta:",beta)
+            # if(beta<1.0e9)
+            #     beta = beta0^currentStep
+            # end
+            println("beta:",beta)
             x1 = updateX1(x1,x2,lambda,p1c,p1A,p2c,p2A,b,alpha,beta,gamma)
             x2 = updateX2(x1,x2,lambda,p1c,p1A,p2c,p2A,b,alpha,beta,gamma)
             lambda = updateLambda(x1,x2,lambda,p1c,p1A,p2c,p2A,b,alpha,beta,gamma)
