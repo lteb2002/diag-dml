@@ -32,7 +32,7 @@ class PfSumtLPSolverJulia extends RereLPSolver {
       val ree = LPCoordinator.transformBiggerEqualsThanAsEquals(const, obj)
       var A = ree._1
       var c = ree._2
-      println("Bf-LP solver Julia: Variable number:" + A.cols + ", Constrain number:" + A.rows)
+      println("Pf-LP solver Julia: Variable number:" + A.cols + ", Constrain number:" + A.rows)
       val start = System.currentTimeMillis()
       val jc: Ju4jaClient = new Ju4jaClient(ju4jaIp, ju4jaPort)
       val aa =Array.ofDim[Double](A.rows,A.cols)
@@ -45,7 +45,7 @@ class PfSumtLPSolverJulia extends RereLPSolver {
       val bb = breeze.numerics.rint(b * 10000.0)/10000.0
 //      println(c)
       var args = Array[AnyRef](c.toArray, aa, bb.toArray, regType, new java.lang.Double(regWeight))
-      val res = jc.invokeFunction("solveDmlLp", "RereDmlLpSolverBf", args)
+      val res = jc.invokeFunction("solveDmlLp", "RereDmlLpSolverPf", args)
       var ds: Array[java.lang.Double] = Ju4jaParser.parseStringAs1DArray(res.getResultStr.toString)
       //import scala.collection.JavaConverters._
       var dss = new Array[Double](ds.length)

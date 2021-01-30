@@ -10,7 +10,12 @@ import com.reremouse.util.RereLogger
   * Created by Lteb2002 on 2018-01-19.
   * Solve linear programming and its regularization problems with Barrier function methods
   * 该方法要求线性规划的约束条件全部为“>=”的不等式约束
+  * Just for test purpose
+  * Although this solver can solve small optimization problems correctly, it turned out that the underlying solver L-BFGS in Breeze.jar can not
+  * solver big problems containing too many variables (more than 1000?). So this solver is substituted by its PfSumtLPSolverJulia counterpart, which invokes the Julia implementation
+  * of the Penalty Method.
   */
+@Deprecated
 class PfSumtLPSolver extends RereLPSolver {
   val logger = RereLogger.getLogger(this.getClass)
 

@@ -11,7 +11,9 @@ import com.reremouse.util.RereLogger
 /**
   * Created by RereMouse on 2018-01-18.
   * 使用ADMM与Sumit方法求解(Bf表示障碍函数)
+  * Just for test purpose
   */
+@Deprecated
 class AdmmLPSolverBfSumt extends RereLPSolver {
   val logger = RereLogger.getLogger(this.getClass)
   var mainVnum: Int = 0

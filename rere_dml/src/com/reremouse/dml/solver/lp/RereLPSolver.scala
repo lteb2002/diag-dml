@@ -37,10 +37,8 @@ object RereLPSolver {
       case "simplex"=> new SCPLPSolver
       //since Java sucks at numerical computing, the Julia implementation of BfSumtLPSolver is recommended
 //      case "bf"=> new BfSumtLPSolver
-      case "bf"=> new PfSumtLPSolverJulia
-      //case "multiplier"=> new MultiplierLPSolverY2
-      case "multiplier"=> new MultiplierLPSolverY2Julia
-      case "admm"=> new AdmmLPSolverBfSumt(mainVnum,s1Vnum,s2Vnum)
+      case "pf"=> new PfSumtLPSolverJulia()
+      case "admm"=> new AdmmLPSolverJulia()
       case _=> new SCPLPSolver
     }
     return solver

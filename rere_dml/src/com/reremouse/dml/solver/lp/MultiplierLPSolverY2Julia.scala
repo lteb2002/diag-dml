@@ -10,7 +10,9 @@ import com.reremouse.util.RereLogger
 /**
   * 使用乘子法、内点法求解线性规划问题
   * Created by RereMouse on 2018-01-18.
+  * Just for test purpose
   */
+@Deprecated
 class MultiplierLPSolverY2Julia extends RereLPSolver {
   val logger = RereLogger.getLogger(this.getClass)
   //正则项权重

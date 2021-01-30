@@ -14,7 +14,9 @@ import scpsolver.problems.LinearProgram
 /**
   * 使用乘子法、内点法求解线性规划问题
   * Created by RereMouse on 2018-01-18.
+  * Just for test purpose
   */
+@Deprecated
 class MultiplierLPSolverY2 extends RereLPSolver {
   val logger = RereLogger.getLogger(this.getClass)
   //正则项权重

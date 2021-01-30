@@ -69,6 +69,7 @@ object DmlAnalysis {
     //评估当前的同异类点状况
     eval.evaluate(trips, dim)
     //DML求解器（内部调用其它优化算法）
+//    println(regWeight)
     val prjMatrix = RereDmlSolver.createSolver.computeProjectionMatrix(trips, lpSolver, regType, regWeight)
     val time3 = System.currentTimeMillis()
     //评估变换之后的同异类点状况
@@ -90,15 +91,19 @@ object DmlAnalysis {
 
   def main(args: Array[String]): Unit = {
 
-    val path = "G:\\dml_experiments\\dml_net\\"
+    val path = "H:\\dml_experiments\\dml_net\\"
 //    val fNames = Array("bank_marketing","bank-additional","gao_xin_numeric_n2b_utf-8","BJ_DEPOSIT_RANKs","credit_risk")
-    val fNames = Array("ele_vector_with_head2")
+    val fNames = Array("diabetes")
     //val fNames = Array("iris_svd","wine_svd","diabetes_svd","segment_svd","waveform_svd","letter-recognition_svd","magic04_svd","spambase_svd","credit_card_svd","shuttle_svd","HAPT_svd")
 
 
-//    val lpSolver = "bf"
-    val lpSolver = "simplex"
-    val regTypes: Array[String] = Array("none")
+    // valid values of lpSolver include 'pf', 'admm' and 'simplex'. 'pf' and 'admm' are for 'L2' reg., while simplex is for 'none' or 'L1'
+    // Since pf and admm solver is implemented with Julia language, you should start Julia server first (run run_ju4ja_for_rere_dml.jl) if you use either of the two solvers.
+//    val lpSolver = "pf"
+    val lpSolver = "admm"
+//    val lpSolver = "simplex"
+    //valid value of regType is 'none' or 'l1' or 'l2'.
+    val regTypes: Array[String] = Array("l2")
     //val regType: String = "none"
 //    val regWeights: Array[Double] = Array(0.1) //设置为0时将自动计算正则化权重
 //    val regWeights: Array[Double] = Array(0.001,0.01,0.1,1,10,100,1000) //设置为0时将自动计算正则化权重
