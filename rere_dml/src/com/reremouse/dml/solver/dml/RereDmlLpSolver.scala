@@ -97,7 +97,7 @@ class RereDmlLpSolver extends RereDmlSolver {
       regType.toLowerCase() match {
         case "none" => "simplex"
         case "l1" => "simplex"
-        case "l2" => "multiplier"
+        case "l2" => "pf"
         case _ => "simplex"
       }
     } else {
@@ -108,7 +108,7 @@ class RereDmlLpSolver extends RereDmlSolver {
     val solver = RereLPSolver.createLPSolver(obj1.length, obj2.length, obj2.length, solverName)
     var regWeight = regWeight0
     //自动化设置正则化项的权重
-    if (regWeight == 0) regWeight = obj.length / 2.0
+//    if (regWeight == 0) regWeight = obj.length / 2.0
     val result: DenseVector[Double] = solver.solve(obj, m, b, regType, regWeight, obj1.length)._2.map(x => {
       var y: Double = x
       //防止值过大，过拟合
