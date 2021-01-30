@@ -97,8 +97,8 @@ object DmlAnalysis {
     //val fNames = Array("iris_svd","wine_svd","diabetes_svd","segment_svd","waveform_svd","letter-recognition_svd","magic04_svd","spambase_svd","credit_card_svd","shuttle_svd","HAPT_svd")
 
 
-    // valid values of lpSolver include 'pf', 'admm' and 'simplex'. 'pf' and 'admm' are for 'L2' reg., while simplex is for 'none' or 'L1'
-    // Since pf and admm solver is implemented with Julia language, you should start Julia server first (run run_ju4ja_for_rere_dml.jl) if you use either of the two solvers.
+    // valid values of lpSolver include 'pf', 'admm' and 'simplex'. 'pf' and 'admm' are for 'L2' reg., while simplex is for 'none' or 'L1' reg.
+    // Since pf and admm solver are implemented with Julia language, you should start Julia server first (run run_ju4ja_for_rere_dml.jl) if you use either of the two solvers.
 //    val lpSolver = "pf"
     val lpSolver = "admm"
 //    val lpSolver = "simplex"
