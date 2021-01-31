@@ -100,14 +100,14 @@ object DmlAnalysis {
     // valid values of lpSolver include 'pf', 'admm' and 'simplex'. 'pf' and 'admm' are for 'L2' reg., while simplex is for 'none' or 'L1' reg.
     // Since pf and admm solver are implemented with Julia language, you should start Julia server first (run run_ju4ja_for_rere_dml.jl) if you use either of the two solvers.
 //    val lpSolver = "pf"
-    val lpSolver = "admm"
-//    val lpSolver = "simplex"
+//    val lpSolver = "admm"
+    val lpSolver = "simplex"
     //valid value of regType is 'none' or 'l1' or 'l2'.
-    val regTypes: Array[String] = Array("l2")
+    val regTypes: Array[String] = Array("l1")
     //val regType: String = "none"
 //    val regWeights: Array[Double] = Array(0.1) //设置为0时将自动计算正则化权重
 //    val regWeights: Array[Double] = Array(0.001,0.01,0.1,1,10,100,1000) //设置为0时将自动计算正则化权重
-    val regWeights: Array[Double] = Array(0) //设置为0时将自动计算正则化权重
+    val regWeights: Array[Double] = Array(1) //设置为0时将自动计算正则化权重
 
     for (fn <- fNames) {
       for (regType <- regTypes) {
